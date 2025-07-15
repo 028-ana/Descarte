@@ -38,10 +38,17 @@ class PontoColeta(models.Model):
     def __str__(self):
         return self.nome
 
-class SubstanciaToxica(models.Model):
+from django.db import models
+
+class Substancia(models.Model):
     nome = models.CharField(max_length=100)
     efeitoAmbiental = models.TextField()
-
+    nivel_perigo = models.CharField(max_length=1, choices=[
+        ('A', 'Alto'),
+        ('M', 'Médio'), 
+        ('B', 'Baixo')
+    ])
+    
     def __str__(self):
         return self.nome
 
@@ -52,7 +59,7 @@ class DispositivoEletronico(models.Model):
         ('pendente', 'Pendente'),
     ]
     tipo = models.CharField(max_length=100)
-    componentes_toxicos = models.ManyToManyField(SubstanciaToxica, through='ComponenteToxico')
+    componentes_toxicos = models.ManyToManyField(Substancia, through='ComponenteToxico')
     status = models.CharField(max_length=10, choices=STATUS, default='pendente')
 
     def __str__(self):
@@ -60,7 +67,7 @@ class DispositivoEletronico(models.Model):
 
 class ComponenteToxico(models.Model):
     dispositivo = models.ForeignKey(DispositivoEletronico, on_delete=models.CASCADE)
-    substancia = models.ForeignKey(SubstanciaToxica, on_delete=models.CASCADE)
+    substancia = models.ForeignKey(Substancia, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.dispositivo} - {self.substancia}"

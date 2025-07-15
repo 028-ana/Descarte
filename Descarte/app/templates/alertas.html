@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Alertas Ambientais | EcoTech</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f9f4;
+            color: #333;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #fff !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #2196F3;
+        }
+
+        .card-text {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #4CAF50;
+            display: inline-block;
+            width: 150px;
+        }
+
+        .alert-critical {
+            border-left: 5px solid #dc3545;
+        }
+
+        .alert-high {
+            border-left: 5px solid #fd7e14;
+        }
+
+        .alert-medium {
+            border-left: 5px solid #ffc107;
+        }
+
+        .alert-low {
+            border-left: 5px solid #28a745;
+        }
+
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: #3e8e41;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state-icon {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <a class="navbar-brand" href="/">EcoTech</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link text-dark" href="/">Início</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/usuarios/">Usuários</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/pontos_coleta/">Pontos de Coleta</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/dispositivos/">Dispositivos</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/substancias/">Substâncias Tóxicas</a></li>
+                <li class="nav-item"><a class="nav-link text-dark active" href="/alertas/">Alertas</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/educativos/">Conteúdos Educativos</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/relatorios/">Relatórios</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="/admin/">Administração</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-4">Alertas Ambientais</h1>
+                    <p class="lead">Notificações sobre contaminações e eventos ambientais importantes</p>
+                </div>
+                <a href="{% url 'criar_alerta' %}" class="btn btn-add">+ Novo Alerta</a>
+
+            </div>
+        </div>
+
+        {% if alertas %}
+        <div class="row">
+            {% for alerta in alertas %}
+            <div class="col-md-6">
+                <div class="card shadow alert-{{ alerta.nivel|lower }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ alerta.titulo }}</h5>
+                        
+                        <p class="card-text">
+                            <span class="info-label">⚠️ Nível:</span> 
+                            <span class="badge bg-{% if alerta.nivel == 'C' %}danger{% elif alerta.nivel == 'A' %}warning{% else %}success{% endif %}">
+                                {{ alerta.get_nivel_display }}
+                            </span>
+                        </p>
+                        
+                        <p class="card-text">
+                            <span class="info-label">📅 Data:</span> 
+                            {{ alerta.data|date:"d/m/Y" }}
+                        </p>
+                        
+                        <p class="card-text">
+                            <span class="info-label">📍 Local:</span> 
+                            {{ alerta.local }}
+                        </p>
+                        
+                        <p class="card-text">
+                            <span class="info-label">📝 Descrição:</span> 
+                            {{ alerta.descricao }}
+                        </p>
+                        
+                        {% if alerta.acoes_recomendadas %}
+                        <p class="card-text">
+                            <span class="info-label">🛠️ Ações:</span> 
+                            {{ alerta.acoes_recomendadas }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">🔔</div>
+            <h3>Nenhum alerta cadastrado</h3>
+            <p class="text-muted">Adicione o primeiro alerta clicando no botão "Novo Alerta"</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
