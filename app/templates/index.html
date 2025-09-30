@@ -6,156 +6,329 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Sistema de Lixo Eletrônico</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --primary: #00bcd4;
+            --secondary: #ff9800;
+            --dark: #1d1d1d;
+            --light: #f5f5f5;
+            --danger: #e91e63;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 70px; /* Para compensar a navbar fixa */
         }
 
-        .navbar {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Navbar personalizada */
+        .navbar-custom {
+            background: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
-        .navbar-brand {
+        .navbar-brand-custom {
             font-weight: 700;
             font-size: 24px;
+            color: var(--primary) !important;
         }
 
         .navbar-nav .nav-link {
-            font-weight: 600;
+            font-weight: 500;
             margin-right: 10px;
             transition: color 0.3s ease;
+            color: var(--dark) !important;
         }
 
         .navbar-nav .nav-link:hover {
-            color: #fff !important;
-            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--primary) !important;
+            background-color: rgba(0, 0, 0, 0.05);
             border-radius: 5px;
-            padding: 5px 10px;
         }
 
-        .jumbotron {
-            background: linear-gradient(135deg, #4CAF50, #2196F3);
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            border-radius: 12px;
-            padding: 50px 30px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            padding: 4rem 2rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+            margin-top: 20px;
         }
 
-        .jumbotron h1 {
-            font-weight: 700;
+        header h1 {
+            font-size: 2.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
         }
 
-        .jumbotron p {
-            font-size: 18px;
-            margin-top: 15px;
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            height: 3px;
+            width: 80px;
+            background: var(--primary);
+            display: block;
+            margin: 0.5rem auto;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width:768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform .3s ease, box-shadow .3s ease;
             border: none;
-            border-radius: 12px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .card-title {
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: white;
+            background: var(--danger);
+            margin-right: 0.4rem;
+        }
+
+        .stats {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .cta {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+        }
+
+        .cta h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
             font-weight: 600;
-            color: #2196F3;
+            transition: opacity .3s ease;
         }
 
-        .card-text {
+        .cta a:hover {
+            opacity: .8;
+            color: white;
+            text-decoration: none;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        [data-animate] {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        /* Sistema de recursos */
+        .system-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .system-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+        }
+
+        .system-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .system-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .system-card .card-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .system-card .card-text {
             font-size: 15px;
             color: #555;
         }
-
-        h2 {
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: #4CAF50;
-        }
-
-        .jumbotron {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-      }
-
-      .navbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.navbar-brand {
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.navbar-collapse {
-  display: flex !important;
-  justify-content: center;
-  width: 100%;
-}
-
-.navbar-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-}
-
-
-
-       
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <a class="navbar-brand" href="/">EcoTech</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link text-dark" href="/">Início</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/usuarios/">Usuários</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/pontos_coleta/">Pontos de Coleta</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/dispositivos/">Dispositivos</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/substancias/">Substâncias Tóxicas</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/alertas/">Alertas</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/educativos/">Conteúdos Educativos</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/relatorios/">Relatórios</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/admin/">Administração</a></li>
-            </ul>
+    <!-- Navbar personalizada -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom" href="/">EcoTech</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/">Usuários</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pontos_coleta/">Pontos de Coleta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dispositivos/">Dispositivos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/substancias/">Substâncias Tóxicas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/alertas/">Alertas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/educativos/">Conteúdos Educativos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/relatorios/">Gerenciar coletas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/">Administração</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Sistema de Conscientização sobre Lixo Eletrônico</h1>
-            <p class="lead">Promovendo sustentabilidade e organização digital com impacto ambiental positivo</p>
-            <p class="lead">Navegue pelo menu para conhecer os recursos do sistema</p>
-        </div>
-    </div>
+    <!-- Conteúdo principal -->
+    <header>
+        <h1 data-animate>Descarte Irregular de Lixo Eletrônico</h1>
+        <p data-animate>A montanha invisível de dispositivos que descartamos de forma inadequada tem contaminado solos e águas, ameaçando a saúde das pessoas e do planeta.</p>
+    </header>
 
-    <div class="container text-center mb-5">
-        <h2>Destaques do Sistema</h2>
+    <section id='estatisticas'>
+        <h2 class='section-title'>Números Alarmantes</h2>
+        <div class='grid grid-3'>
+            <div data-animate>
+                <p class='stats'>62.3 Mt</p>
+                <p>de lixo eletrônico gerados globalmente em 2024<span class='badge'>+82%</span> desde 2010</p>
+            </div>
+            <div data-animate>
+                <p class='stats'>20%</p>
+                <p>é reciclado de forma adequada — o restante é queimado ou vai parar em aterros</p>
+            </div>
+            <div data-animate>
+                <p class='stats'>50+</p>
+                <p>elementos químicos tóxicos podem ser liberados de e‑lixo mal descartado</p>
+            </div>
+        </div>
+    </section>
+
+    <section id='impacto'>
+        <h2 class='section-title'>Impactos Ambientais</h2>
+        <div class='grid grid-2'>
+            <article class='card' data-animate>
+                <img src='https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' alt='Placa eletrônica quebrada no solo'>
+                <div class='card-content'>
+                    <h3>Metais Pesados no Solo</h3>
+                    <p>Chumbo, cádmio e mercúrio presentes em placas e baterias podem se infiltrar no solo, reduzindo a fertilidade e entrando na cadeia alimentar.</p>
+                </div>
+            </article>
+            <article class='card' data-animate>
+                <img src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' alt='Riacho contaminado por lixo'>
+                <div class='card-content'>
+                    <h3>Contaminação da Água</h3>
+                    <p>Componentes tóxicos lixiviados alcançam corpos d'água, afetando ecossistemas aquáticos e abastecimento humano.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Seção do Sistema -->
+    <div class="system-section">
+        <h2 class="section-title">Recursos do Sistema EcoTech</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card shadow">
+                <div class="card system-card">
                     <div class="card-body">
                         <h5 class="card-title">Mapa de Pontos de Coleta</h5>
                         <p class="card-text">Visualize locais de descarte correto com base em sua localização.</p>
@@ -163,7 +336,7 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card shadow">
+                <div class="card system-card">
                     <div class="card-body">
                         <h5 class="card-title">Conteúdo Educativo</h5>
                         <p class="card-text">Artigos, vídeos e materiais sobre os perigos do lixo eletrônico.</p>
@@ -171,20 +344,83 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card shadow">
+                <div class="card system-card">
                     <div class="card-body">
                         <h5 class="card-title">Alertas Ambientais</h5>
                         <p class="card-text">Receba notificações sobre contaminações e eventos ambientais.</p>
                     </div>
                 </div>
             </div>
+            <div class="col-md-4 mb-4">
+                <div class="card system-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestão de Usuários</h5>
+                        <p class="card-text">Administre usuários do sistema e seus perfis de acesso.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card system-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Substâncias Tóxicas</h5>
+                        <p class="card-text">Catálogo completo de elementos perigosos presentes em e-lixo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card system-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Relatórios de Coleta</h5>
+                        <p class="card-text">Gerencie e acompanhe as coletas de resíduos eletrônicos.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <section id='como-descartar'>
+        <h2 class='section-title'>Como Descartar Corretamente</h2>
+        <div class='grid grid-2'>
+            <article class='card' data-animate>
+                <img src='https://images.unsplash.com/photo-1587334894130-1c43e0c76c8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' alt='Ponto de coleta e-lixo'>
+                <div class='card-content'>
+                    <h3>Pontos de Coleta</h3>
+                    <p>Leve aparelhos fora de uso a ecopontos ou lojas que aceitam devolução. Muitas marcas têm programas de logística reversa.</p>
+                </div>
+            </article>
+            <article class='card' data-animate>
+                <img src='https://images.unsplash.com/photo-1585771724684-382f540b4b39?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' alt='Pessoa desmontando eletrônicos para reciclagem'>
+                <div class='card-content'>
+                    <h3>Reciclagem Especializada</h3>
+                    <p>Empresas certificadas removem materiais valiosos e descartam substâncias perigosas com segurança.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class='cta' data-animate>
+        <h2>Junte‑se à Solução</h2>
+        <p>Informe-se, descarte corretamente e pressione fabricantes e governos por políticas de reciclagem responsáveis.</p>
+        <a href='/pontos_coleta/'>Encontrar um ponto de coleta</a>
+    </section>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+    </script>
 </body>
 
 </html>

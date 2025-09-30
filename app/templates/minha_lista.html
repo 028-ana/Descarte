@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Coletas</title>
+</head>
+<body>
+    <h1>Lista de Coletas</h1>
+
+    <ul>
+        {% for coleta in \ %}
+            <li>{{ coleta.data }}</li>
+        {% empty %}
+            <li>Nenhuma coleta encontrada.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -7,213 +7,410 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Substâncias Tóxicas | EcoTech</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        /* ... estilos mantidos como estão ... */
+        :root {
+            --primary: #00bcd4;
+            --secondary: #ff9800;
+            --dark: #1d1d1d;
+            --light: #f5f5f5;
+            --danger: #e91e63;
+            --success: #4CAF50;
+            --warning: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 80px;
+        }
+
+        /* Navbar personalizada */
+        .navbar-custom {
+            background: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand-custom {
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary) !important;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+            color: var(--dark) !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary) !important;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+            font-weight: 600;
+        }
+
+        /* Container principal */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            height: 3px;
+            width: 100px;
+            background: var(--primary);
+            display: block;
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Header da página */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 3rem;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        /* Cards de substâncias */
+        .card-custom {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform .3s ease, box-shadow .3s ease;
+            border: none;
+            margin-bottom: 2rem;
+            height: 100%;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body-custom {
+            padding: 1.5rem;
+        }
+
+        .card-title-custom {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem 0;
+        }
+
+        .info-icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 0.8rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--dark);
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Badges de nível de perigo */
+        .danger-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .danger-alto {
+            background: var(--danger);
+        }
+
+        .danger-medio {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .danger-baixo {
+            background: var(--success);
+        }
+
+        .danger-moderado {
+            background: var(--secondary);
+        }
+
+        /* Botões estilizados */
+        .btn-custom {
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            background: #00acc1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger-custom {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger-custom:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .btn-success-custom {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        /* Estado vazio */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .empty-state-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-text {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Ações dos cards */
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Animações */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
     </style>
 </head>
 
-<style>
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f4f9f4;
-        color: #333;
-    }
-
-    .navbar {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-brand {
-        font-weight: 700;
-        font-size: 24px;
-    }
-
-    .navbar-nav .nav-link {
-        font-weight: 600;
-        margin-right: 10px;
-        transition: color 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover {
-        color: #fff !important;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 5px;
-        padding: 5px 10px;
-    }
-
-    .page-header {
-        background: linear-gradient(135deg, #4CAF50, #2196F3);
-        color: white;
-        border-radius: 12px;
-        padding: 30px;
-        margin-bottom: 30px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .page-header h1 {
-        font-weight: 700;
-    }
-
-    .card {
-        border: none;
-        border-radius: 12px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    .card-title {
-        font-weight: 600;
-        color: #2196F3;
-    }
-
-    .card-text {
-        font-size: 15px;
-        color: #555;
-    }
-
-    .info-label {
-        font-weight: 600;
-        color: #4CAF50;
-        display: inline-block;
-        width: 150px;
-    }
-
-    .btn-add {
-        background-color: #4CAF50;
-        color: white;
-        font-weight: 600;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-add:hover {
-        background-color: #3e8e41;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 40px;
-        background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .empty-state-icon {
-        font-size: 50px;
-        color: #ccc;
-        margin-bottom: 20px;
-    }
-
-    .navbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.navbar-brand {
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.navbar-collapse {
-  display: flex !important;
-  justify-content: center;
-  width: 100%;
-}
-
-.navbar-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-}
-
-</style>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <a class="navbar-brand" href="/">EcoTech</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link text-dark" href="/">Início</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/usuarios/">Usuários</a></li>
-                <li class="nav-item"><a class="nav-link text-dark active" href="/pontos_coleta/">Pontos de Coleta</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/dispositivos/">Dispositivos</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/substancias/">Substâncias Tóxicas</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/alertas/">Alertas</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/educativos/">Conteúdos Educativos</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/relatorios/">Relatórios</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="/admin/">Administração</a></li>
-            </ul>
+    <!-- Navbar personalizada -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom" href="/">EcoTech</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/">Usuários</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pontos_coleta/">Pontos de Coleta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dispositivos/">Dispositivos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/substancias/">Substâncias Tóxicas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/alertas/">Alertas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/educativos/">Conteúdos Educativos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/relatorios/">Gerenciar coletas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/">Administração</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        
-        <!-- ... navegação mantida ... -->
-    </nav>
-
-    <div class="container mt-5">
+    <!-- Conteúdo principal -->
+    <div class="main-container fade-in">
         <div class="page-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 class="display-4">Substâncias Tóxicas</h1>
-                    <p class="lead">Informações sobre os componentes perigosos encontrados em lixo eletrônico</p>
-                </div>
-                <a href="{% url 'criar_substancia' %}" class="btn btn-add">+ Nova Substância</a>
-
-            </div>
+            <h1 class="page-title">Substâncias Tóxicas</h1>
+            <p class="page-subtitle">Informações sobre os componentes perigosos encontrados em lixo eletrônico</p>
+            <a href="{% url 'criar_substancia' %}" class="btn btn-success-custom btn-custom">+ Nova Substância</a>
         </div>
 
         {% if substancias %}
         <div class="row">
             {% for substancia in substancias %}
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ substancia.nome }}</h5>
+            <div class="col-md-6 col-lg-4">
+                <div class="card-custom">
+                    <div class="card-body-custom">
+                        <h3 class="card-title-custom">{{ substancia.nome }}</h3>
                         
-                        <p class="card-text">
-                            <span class="info-label">☢️ Nível de Perigo:</span> 
-                            <span class="danger-level danger-{{ substancia.nivel_perigo|lower }}">
-                                {{ substancia.get_nivel_perigo_display }}
-                            </span>
-                        </p>
+                        <div class="info-item">
+                            <span class="info-icon">☢️</span>
+                            <div class="info-content">
+                                <span class="info-label">Nível de Perigo</span>
+                                <span class="danger-badge danger-{{ substancia.nivel_perigo|lower }}">
+                                    {{ substancia.get_nivel_perigo_display }}
+                                </span>
+                            </div>
+                        </div>
                         
-                        <p class="card-text">
-                            <span class="info-label">🌍 Efeito Ambiental:</span> 
-                            {{ substancia.efeitoAmbiental }}
-                        </p>
+                        <div class="info-item">
+                            <span class="info-icon">🌍</span>
+                            <div class="info-content">
+                                <span class="info-label">Efeito Ambiental</span>
+                                <span class="info-value">{{ substancia.efeitoAmbiental }}</span>
+                            </div>
+                        </div>
                         
                         {% if substancia.dispositivos_associados %}
-                        <p class="card-text">
-                            <span class="info-label">📱 Encontrado em:</span> 
-                            {{ substancia.dispositivos_associados }}
-                        </p>
+                        <div class="info-item">
+                            <span class="info-icon">📱</span>
+                            <div class="info-content">
+                                <span class="info-label">Encontrado em</span>
+                                <span class="info-value">{{ substancia.dispositivos_associados }}</span>
+                            </div>
+                        </div>
                         {% endif %}
                         
                         {% if substancia.tempo_decomposicao %}
-                        <p class="card-text">
-                            <span class="info-label">⏳ Tempo de Decomposição:</span> 
-                            {{ substancia.tempo_decomposicao }}
-                        </p>
+                        <div class="info-item">
+                            <span class="info-icon">⏳</span>
+                            <div class="info-content">
+                                <span class="info-label">Tempo de Decomposição</span>
+                                <span class="info-value">{{ substancia.tempo_decomposicao }}</span>
+                            </div>
+                        </div>
                         {% endif %}
+                        
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-outline-custom btn-custom">Editar</a>
+                            <a href="#" class="btn btn-danger-custom btn-custom" 
+                               onclick="return confirm('Tem certeza que deseja excluir esta substância?')">Excluir</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -221,9 +418,10 @@
         </div>
         {% else %}
         <div class="empty-state">
-            <div class="empty-state-icon">🧪</div>
-            <h3>Nenhuma substância cadastrada</h3>
-            <p class="text-muted">Adicione a primeira substância clicando no botão "Nova Substância"</p>
+            <span class="empty-state-icon">🧪</span>
+            <h3 class="empty-state-title">Nenhuma substância cadastrada</h3>
+            <p class="empty-state-text">Adicione a primeira substância clicando no botão abaixo</p>
+            <a href="{% url 'criar_substancia' %}" class="btn btn-success-custom btn-custom">+ Nova Substância</a>
         </div>
         {% endif %}
     </div>

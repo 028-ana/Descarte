@@ -66,6 +66,3 @@ class UsuarioPontoColetaAdmin(admin.ModelAdmin):
     list_display = ("usuario", "ponto_coleta", "data_utilizacao")
 
 
-@admin.register(GerenciarColota)
-class GerenciarColotaAdmin(admin.ModelAdmin):
-    list_display = ("data", "nivel_contaminacao", "ponto_coleta")
